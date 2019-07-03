@@ -1,0 +1,7 @@
+Taxon: 
+Sorce: 
+SorceID: 
+MHHID: 
+oVert: 
+Symbol: 
+iDB: 
