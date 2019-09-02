@@ -90,7 +90,7 @@ GRANT_SCANNING_INSTITUTION = 0
 GRANT_SPECIMEN_PROVIDER = 0
 #%% Media Permissions #########################################################
 #Name of the copyright holder. Also used as the entity granting permission.
-PROVIDER = "Ohio University"
+PROVIDER = "University of Washington Fish Collection"
 
 #### Copyright Permission Options:
 #0: Copyright permission not set
@@ -128,7 +128,7 @@ PUB_STATUS = 2
 
 #Add additional CT settings that aren't always in raw output files:
 #Write the name of the scanning technician in quotes
-TECHNICIAN = 'Scanned by Jasmine Croghan, Uploaded by Jonathan Huie'
+TECHNICIAN = 'Jonathan Huie'
 
 #Write what wedge was use in scanning, if any, in quotes.
 WEDGE = None

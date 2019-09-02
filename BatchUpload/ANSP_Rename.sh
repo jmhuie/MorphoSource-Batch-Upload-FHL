@@ -32,7 +32,7 @@ do
     unzip -q ./zips/$line -d ./unzips/ #unzips VNHM download into Unzips folder
     if test -f ./unzips/Info.txt # looks for Info file from VNHM
     then 
-        dos2unix ./unzips/Info.txt
+        #dos2unix ./unzips/Info.txt
         Sorce=$(awk '/^Sorce: / {print $2}' ./unzips/Info.txt) #looks in Info file for Museum and CatNum
         CatNum=$(awk '/^SorceID:/ {print $2}' ./unzips/Info.txt)
         Source=${Sorce%$'\r'} #strips carriage returns so values can be set as variables
