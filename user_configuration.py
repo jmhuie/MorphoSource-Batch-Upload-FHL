@@ -45,13 +45,13 @@ OUTPUT_FILE = 'BatchWorksheet'
 #%% Fundamental setup choices #################################################
 #determine oVert now, as will set downstream choices.
 #oVert: Is this upload part of the oVert TCN grant?
-OVERT = False
+OVERT = True
 #Batch: Are there batch scans in the upload?
 BATCH = False
 #Query iDigBio: Do you want to search the iDigBio database to fill in Collection and Occurrence ID?
-QUERY_IDIGBIO = False
+QUERY_IDIGBIO = True
 #UW_Specimen: Does the specimen come from the UW Fish Collection?
-UW_SPECIMEN = False
+UW_SPECIMEN = True
 #%% File name parsing #########################################################
 #User needs to set how a file name will be parsed into a specimen
     #In oVert, the recommended file naming convention is:
@@ -86,8 +86,8 @@ SEGMENT_BODYPART = 3
 #14: Yale University
 #15: University of California-San Diego Scripps Inst of Oceanography
 #Choose either number corresponding to institute or type 'None'.
-GRANT_SCANNING_INSTITUTION = None
-GRANT_SPECIMEN_PROVIDER = None
+GRANT_SCANNING_INSTITUTION = 0
+GRANT_SPECIMEN_PROVIDER = 0
 #%% Media Permissions #########################################################
 #Name of the copyright holder. Also used as the entity granting permission.
 PROVIDER = "Ohio University"
