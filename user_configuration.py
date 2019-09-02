@@ -12,7 +12,7 @@ If you are not going to use a variable, don't leave it blank. Write 'None' inste
 """
 #%% File Paths ################################################################
 #path to folder where all your inputs are stored
-INPUT_PATH = '/Users/Jonathan/Documents/BatchUpload' 
+INPUT_PATH = '/Users/biomechanicslab/Documents/MorphoSource BatchUpload' 
 
 #The name of the folder containing files to batch upload.
 UPLOAD_FOLDER = 'ToUpload'
@@ -45,9 +45,11 @@ OUTPUT_FILE = 'BatchWorksheet'
 #%% Fundamental setup choices #################################################
 #determine oVert now, as will set downstream choices.
 #oVert: Is this upload part of the oVert TCN grant?
-OVERT = True
+OVERT = False
 #Batch: Are there batch scans in the upload?
 BATCH = False
+#Query iDigBio: Do you want to search the iDigBio database to fill in Collection and Occurrence ID?
+QUERY_IDIGBIO = False
 #UW_Specimen: Does the specimen come from the UW Fish Collection?
 UW_SPECIMEN = False
 #%% File name parsing #########################################################
@@ -84,11 +86,11 @@ SEGMENT_BODYPART = 3
 #14: Yale University
 #15: University of California-San Diego Scripps Inst of Oceanography
 #Choose either number corresponding to institute or type 'None'.
-GRANT_SCANNING_INSTITUTION = 0
+GRANT_SCANNING_INSTITUTION = None
 GRANT_SPECIMEN_PROVIDER = None
 #%% Media Permissions #########################################################
 #Name of the copyright holder. Also used as the entity granting permission.
-PROVIDER = "National Museum of Natural History"
+PROVIDER = "Ohio University"
 
 #### Copyright Permission Options:
 #0: Copyright permission not set
@@ -117,7 +119,7 @@ MEDIA_POLICY = 5
 #0: Unpublished
 #1: Published with unrestricted download
 #2: Published with restricted download
-PUB_STATUS = 1
+PUB_STATUS = 2
 
 #%% CT metadata ###############################################################
 ##Are the CT metadata still in a series of raw CT output files, 
@@ -126,7 +128,7 @@ PUB_STATUS = 1
 
 #Add additional CT settings that aren't always in raw output files:
 #Write the name of the scanning technician in quotes
-TECHNICIAN = 'Jonathan Huie'
+TECHNICIAN = 'Scanned by Jasmine Croghan, Uploaded by Jonathan Huie'
 
 #Write what wedge was use in scanning, if any, in quotes.
 WEDGE = None
@@ -162,7 +164,8 @@ NAME_SPECIMENS = 'Catalog number'
 
 #If you want to use extra information to help match collection codes, 
     #what column in the spreadsheet contains the data to use for matching?
-NAME_MATCH = 'Genus'
+NAME_GENUS = 'Genus'
+NAME_SPECIES = 'Species'
 #%% Batch variables ###########################################################
 #if you batch scanned, then you must have a spreadsheet in INPUT_DF.
     #Why? Because you need a key to match specimens to the batches they are a part of
@@ -170,8 +173,9 @@ NAME_MATCH = 'Genus'
 #this is the column name containing the name of which batch a specimen is in.
 NAME_BATCH = 'Batch'
 #%% If not oVert, you need to set these variables, too ########################
-#Enter any grant funding as a string in quotes
-FUNDING_SOURCE = 'NSF DEB-#########'
+#Enter any additional grant funding as a string in quotes #####################
+# if no additional funding was used, enter 'None'
+FUNDING_SOURCE = None
 #this is the column name containing element information
 NAME_ELEMENT = None
 #this is the column name containing which side of the body an element comes from
