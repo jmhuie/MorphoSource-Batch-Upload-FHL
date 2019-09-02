@@ -44,8 +44,9 @@ def fill_element(Worksheet, ElementText, SideText):
 def fill_permissions(Worksheet, Publish, GrantText, Provider, CopyPerm,MediaPol):
     Worksheet.iloc[3:,47] = Publish #set in user_configuration to get publication status
     Worksheet.iloc[3:,51] = GrantText #51= Funding information
-    Worksheet.iloc[3:,52] = f"{Provider} provided access to these data"
-    Worksheet.iloc[3:,54] = f", the collection of which was funded by {GrantText}."
+    Worksheet.iloc[3:,52] = Provider
+    if GrantText is not None:
+    	Worksheet.iloc[3:,54] = f", the collection of which was funded by {GrantText}."
     Worksheet.iloc[3:,55] = True #55= Is it copyrighted?
     Worksheet.iloc[3:,56] = CopyPerm #56= Who gave permission?
     Worksheet.iloc[3:,57] = MediaPol #57= Media license

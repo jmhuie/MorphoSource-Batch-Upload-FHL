@@ -8,7 +8,7 @@ If no institutions, lead TCN institute (UF) used provisionally.
 """
 import json
 
-def generate_grant_report(GrantScan, GrantIn):
+def generate_grant_report(GrantScan, GrantIn, AddGrant):
     """ uses recommended grant citation format for oVert TCN """
     #open up a static version of the json Kevin looked up. 
     Jfile = open('grant_numbers.json')
@@ -31,4 +31,34 @@ def generate_grant_report(GrantScan, GrantIn):
         GrantText = f"oVert TCN; NSF DBI-1701714; NSF DBI-{GrantData[int(GrantScan)]['id']}"
     if GrantIn is not None and GrantScan is not None:
         GrantText = f"oVert TCN; NSF DBI-1701714; NSF DBI-{GrantData[int(GrantScan)]['id']}; NSF DBI-{GrantData[int(GrantIn)]['id']}"
+    if GrantText and AddGrant is not None:
+    	GrantText = f"{GrantText}; {AddGrant}"
+    if GrantText is None and AddGrant is not None:
+    	GrantText = f"{AddGrant}"
     return GrantText
+    
+def generate_grant_report_non_oVert(GrantScan, GrantIn, AddGrant):
+    """ uses recommended grant citation format for oVert TCN """
+    #open up a static version of the json Kevin looked up. 
+    Jfile = open('grant_numbers.json')
+    GrantData = json.load(Jfile)['response']['award'] #Thank you Kevin Love. 
+    Jfile.close()
+    #make modifications for missing choices
+    if GrantScan is None: #if first instituion missing, print only the second
+        GrantScan = GrantIn
+        GrantIn = None
+    if GrantIn == GrantScan: #if same institute, only report once
+        GrantIn = None
+    #format grant citation text
+    if GrantIn is None and GrantScan is None: #in case no institution chosen, at least cite lead TCN
+        GrantText = None
+    if GrantIn is None and GrantScan is not None: #use if only one institution reported, as per machinations above
+        GrantText = f"NSF DBI-{GrantData[int(GrantScan)]['id']}"
+    if GrantIn is not None and GrantScan is not None:
+        GrantText = f"NSF DBI-{GrantData[int(GrantScan)]['id']}; NSF DBI-{GrantData[int(GrantIn)]['id']}"
+    if GrantText and AddGrant is not None:
+    	GrantText = f"{GrantText}; {AddGrant}"
+    if GrantText is None and AddGrant is not None:
+    	GrantText = f"{AddGrant}"
+    return GrantText
+

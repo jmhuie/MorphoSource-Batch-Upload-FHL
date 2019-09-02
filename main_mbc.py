@@ -194,36 +194,36 @@ if uc.SEGMENT_BODYPART is None:
 #change index back so that there aren't index duplicates downstream
 CTdfReorder.index = SpecimensRaw 
 #%% query idigbio #############################################################
-if uc.UW_SPECIMEN == True:
-    print('\nStarting iDigBio queries to find occurrence IDs.')
-    FullSpecimenNumbers = ['Uw ' + x for x in list(SpecimenNumbers)]
-    PossibleSpecimens = qiuw.find_options(list(Institutions)[0], list(FullSpecimenNumbers)[0])
-    PossibleCollections = qiuw.collections_options(PossibleSpecimens)
-    print('\nHere are possible collection codes based on the first specimen number:')
-if uc.UW_SPECIMEN == False:
-    print('\nStarting iDigBio queries to find occurrence IDs.')
-    PossibleSpecimens = qi.find_options(list(Institutions)[0], list(SpecimenNumbers)[0])
-    PossibleCollections = qi.collections_options(PossibleSpecimens)
-    print('\nHere are possible collection codes based on the first specimen number:')
-
-#%% guess collection? #########################################################
-#Guess = input("Do you want the program to guess the correct collection based on genus provided? [y/n]")
-#if Guess == 'y':
-#    Genus = qi.choose_genus_column(UserInputRaw)
-#    if pd.isna(Genus[0]) == True:
-#        print("No genus provided for guessing. You choose.")
-#        CollectionsChoice = qi.user_choose_collection(PossibleCollections)
-#    else:
-#        PossibleGenera = qi.genera_options(PossibleSpecimens)
-#        CollectionsChoice = qi.guess_collections(PossibleCollections, PossibleGenera, Genus)
-#if Guess == 'n':
-if uc.UW_SPECIMEN == True:
-    CollectionsChoice = qiuw.user_choose_collection(PossibleCollections)
-#for each, pull the Occurrence IDs.
-    SpecimenDf = qiuw.make_occurrence_df(CollectionsChoice, SpecimensSplit, uc.SEGMENT_MUSEUM, uc.SEGMENT_NUMBER)
-if uc.UW_SPECIMEN == False:
-    CollectionsChoice = qi.user_choose_collection(PossibleCollections)
-    SpecimenDf = qi.make_occurrence_df(CollectionsChoice, SpecimensSplit, uc.SEGMENT_MUSEUM, uc.SEGMENT_NUMBER)
+if uc.QUERY_IDIGBIO == True:
+	if uc.UW_SPECIMEN == True:
+		print('\nStarting iDigBio queries to find occurrence IDs.')
+		FullSpecimenNumbers = ['Uw ' + x for x in list(SpecimenNumbers)]
+		PossibleSpecimens = qiuw.find_options(list(Institutions)[0], list(FullSpecimenNumbers)[0])
+		PossibleCollections = qiuw.collections_options(PossibleSpecimens)
+		print('\nHere are possible collection codes based on the first specimen number:')
+	if uc.UW_SPECIMEN == False:
+		print('\nStarting iDigBio queries to find occurrence IDs.')
+		PossibleSpecimens = qi.find_options(list(Institutions)[0], list(SpecimenNumbers)[0])
+		PossibleCollections = qi.collections_options(PossibleSpecimens)
+		print('\nHere are possible collection codes based on the first specimen number:')
+	if uc.UW_SPECIMEN == True:
+		CollectionsChoice = qiuw.user_choose_collection(PossibleCollections)
+	#for each, pull the Occurrence IDs.
+		SpecimenDf = qiuw.make_occurrence_df(CollectionsChoice, SpecimensSplit, uc.SEGMENT_MUSEUM, uc.SEGMENT_NUMBER)
+	if uc.UW_SPECIMEN == False:
+		CollectionsChoice = qi.user_choose_collection(PossibleCollections)
+		SpecimenDf = qi.make_occurrence_df(CollectionsChoice, SpecimensSplit, uc.SEGMENT_MUSEUM, uc.SEGMENT_NUMBER)
+    
+if uc.QUERY_IDIGBIO == False:	#NOT WORKING
+   	if uc.SEGMENT_COLLECTION is None:
+   		SpecimenDf = SpecimensSplit.iloc[:,[uc.SEGMENT_MUSEUM, uc.SEGMENT_MUSEUM, uc.SEGMENT_NUMBER]]
+   		SpecimenDf.columns = ["Institution","Collection","CatalogNumber"]
+   		SpecimenDf.assign(Collection=nan)
+   	if uc.SEGMENT_COLLECTION is not None:
+   		SpecimenDf = SpecimensSplit.iloc[:,[uc.SEGMENT_MUSEUM, uc.SEGMENT_COLLECTION, uc.SEGMENT_NUMBER]]
+   		SpecimenDf.columns = ["Institution","Collection","CatalogNumber"]
+   	SpecimenDf = SpecimenDf.assign(OccurrenceID=nan)
+    
 #SpecimenDf.iloc[:,3]
 #%% check for multiple collections ############################################
 #MultipleCollections = input("Does this batch of specimens sample multiple collections? [y/n]")
@@ -248,8 +248,10 @@ if uc.OVERT == True:
     else:
         ElementText = None
 if uc.OVERT == False:
-    ElementText = UserInputRaw[uc.NAME_ELEMENT]
-    SideText = UserInputRaw[uc.NAME_SIDE]
+	if uc.NAME_ELEMENT is not None:
+		ElementText = CTdfReorder[uc.NAME_ELEMENT].tolist()
+	if uc.NAME_ELEMENT is None:
+		ElementText = None
 #%% additional CT metadata ####################################################
 #add in additional info not necessarily included in CT metadata files
 if uc.TECHNICIAN is not None:
@@ -275,11 +277,14 @@ for line in CTdfReorder['filter']:
 #%% Grant reporting ###########################################################
 print('\nStarting policy input.')
 #oVert was user input earlier.
+import grant_reporting as ggr
 if uc.OVERT == True: 
-    import grant_reporting as ggr
-    GrantText = ggr.generate_grant_report(uc.GRANT_SCANNING_INSTITUTION,uc.GRANT_SPECIMEN_PROVIDER)
+    GrantText = ggr.generate_grant_report(uc.GRANT_SCANNING_INSTITUTION,uc.GRANT_SPECIMEN_PROVIDER, uc.FUNDING_SOURCE)
 if uc.OVERT == False:
-    Granttext = uc.FUNDING_SOURCE
+	import grant_reporting as ggr
+	GrantText = ggr.generate_grant_report_non_oVert(uc.GRANT_SCANNING_INSTITUTION,uc.GRANT_SPECIMEN_PROVIDER, uc.FUNDING_SOURCE)
+
+
 #%% Copyright policy ##########################################################
 CopyPerm = mp.choose_copyright_permission(uc.COPY_PERMISSION)
 MediaPol = mp.choose_media_policy(uc.MEDIA_POLICY)
