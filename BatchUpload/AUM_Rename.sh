@@ -42,14 +42,14 @@ do
     else
         echo "Info.txt not found" #tells you if no Info file
     fi
-    if [[ $Source == "ANSP" ]] #tests you're working with stuff from the correct museum
+    if [[ $Source == "AUM" ]] #tests you're working with stuff from the correct museum
     then
-        Museum="Ansp" #sets museum with correct cases for next script
+        Museum="Aum" #sets museum with correct cases for next script
         Collection="F" #sets to F for fish
         echo $Museum #reads them out
         echo $Collection
     else
-        echo "Not ANSP" # tells you if wrong museum
+        echo "Not AUM" # tells you if wrong museum
     fi
     name="${Museum}_${Collection}_${Number}_body" #takes all variables to set name
     jpgname="${name}_" #adds an underscore so when jpgs get renamed they can have a trailing number 

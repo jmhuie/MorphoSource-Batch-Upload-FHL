@@ -214,7 +214,7 @@ if uc.QUERY_IDIGBIO == True:
 		CollectionsChoice = qi.user_choose_collection(PossibleCollections)
 		SpecimenDf = qi.make_occurrence_df(CollectionsChoice, SpecimensSplit, uc.SEGMENT_MUSEUM, uc.SEGMENT_NUMBER)
     
-if uc.QUERY_IDIGBIO == False:	#NOT WORKING
+if uc.QUERY_IDIGBIO == False:	
    	if uc.SEGMENT_COLLECTION is None:
    		SpecimenDf = SpecimensSplit.iloc[:,[uc.SEGMENT_MUSEUM, uc.SEGMENT_MUSEUM, uc.SEGMENT_NUMBER]]
    		SpecimenDf.columns = ["Institution","Collection","CatalogNumber"]
@@ -223,8 +223,15 @@ if uc.QUERY_IDIGBIO == False:	#NOT WORKING
    		SpecimenDf = SpecimensSplit.iloc[:,[uc.SEGMENT_MUSEUM, uc.SEGMENT_COLLECTION, uc.SEGMENT_NUMBER]]
    		SpecimenDf.columns = ["Institution","Collection","CatalogNumber"]
    	SpecimenDf = SpecimenDf.assign(OccurrenceID=nan)
+   	if uc.NAME_GENUS is not None:
+   		Genus = CTdfReorder[uc.NAME_GENUS]
+   	else: 
+   		Genus = None
+   	if uc.NAME_SPECIES is not None:
+   		Species = CTdfReorder[uc.NAME_SPECIES]
+   	else:
+   		Species = None
     
-#SpecimenDf.iloc[:,3]
 #%% check for multiple collections ############################################
 #MultipleCollections = input("Does this batch of specimens sample multiple collections? [y/n]")
 #if MultipleCollections == 'n':
@@ -283,8 +290,6 @@ if uc.OVERT == True:
 if uc.OVERT == False:
 	import grant_reporting as ggr
 	GrantText = ggr.generate_grant_report_non_oVert(uc.GRANT_SCANNING_INSTITUTION,uc.GRANT_SPECIMEN_PROVIDER, uc.FUNDING_SOURCE)
-
-
 #%% Copyright policy ##########################################################
 CopyPerm = mp.choose_copyright_permission(uc.COPY_PERMISSION)
 MediaPol = mp.choose_media_policy(uc.MEDIA_POLICY)
@@ -421,6 +426,8 @@ if ElementText is not None:
 Worksheet = ftw.fill_zip(Worksheet,ZipFileNames, ZipTitle)
 if MeshData is not None:
     Worksheet = ftw.fill_meshes(Worksheet, MeshData)
+if uc.QUERY_IDIGBIO == False:
+    Worksheet = ftw.fill_taxonomy(Worksheet, Genus, Species)
 #fix those None vs. NaN values
 Worksheet.fillna(value=nan, inplace=True)
 #    Worksheet.iloc[3,:]
