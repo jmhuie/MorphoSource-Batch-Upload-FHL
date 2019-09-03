@@ -49,7 +49,7 @@ do
         echo $Museum #reads them out
         echo $Collection
     else
-        echo "Not UF" # tells you if wrong museum
+        echo "Not LACM" # tells you if wrong museum
     fi
     name="${Museum}_${Collection}_${Number}_body" #takes all variables to set name
     jpgname="${name}_" #adds an underscore so when jpgs get renamed they can have a trailing number 
