@@ -119,7 +119,7 @@ MEDIA_POLICY = 5
 #0: Unpublished
 #1: Published with unrestricted download
 #2: Published with restricted download
-PUB_STATUS = 2
+PUB_STATUS = 1
 
 #%% CT metadata ###############################################################
 ##Are the CT metadata still in a series of raw CT output files, 
@@ -164,8 +164,8 @@ NAME_SPECIMENS = 'Catalog number'
 
 #If you want to use extra information to help match collection codes, 
     #what column in the spreadsheet contains the data to use for matching?
-NAME_GENUS = 'Genus'
-NAME_SPECIES = 'Species'
+NAME_GENUS = None
+NAME_SPECIES = None
 #%% Batch variables ###########################################################
 #if you batch scanned, then you must have a spreadsheet in INPUT_DF.
     #Why? Because you need a key to match specimens to the batches they are a part of
