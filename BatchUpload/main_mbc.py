@@ -301,7 +301,7 @@ ZipTitle = []
 #make the titles depending on type
 for ending in ZipEnd:
     if ending == '.zip':
-        ZipTitle.append('zipped jpg stack')
+        ZipTitle.append('zipped tiff stack')
     if ending == '.dcm':
         ZipTitle.append('dicom stack')
 ZipFileNames = ['{}{}'.format(a_, b_) for a_, b_ in zip(ZipNames,ZipEnd)]
@@ -426,8 +426,8 @@ if ElementText is not None:
 Worksheet = ftw.fill_zip(Worksheet,ZipFileNames, ZipTitle)
 if MeshData is not None:
     Worksheet = ftw.fill_meshes(Worksheet, MeshData)
-if uc.QUERY_IDIGBIO == False:
-    Worksheet = ftw.fill_taxonomy(Worksheet, Genus, Species)
+if uc.QUERY_IDIGBIO == False and Genus is not None and Species is not None:
+	Worksheet = ftw.fill_taxonomy(Worksheet, Genus, Species)
 #fix those None vs. NaN values
 Worksheet.fillna(value=nan, inplace=True)
 #    Worksheet.iloc[3,:]
