@@ -299,9 +299,12 @@ print('\nStarting file name input.')
 ZipFileNames = ZipNames + ZipEnd
 ZipTitle = []
 #make the titles depending on type
+#zip.stack = 'zipped {} stack'.format(uc.FILETYPE)
+file_type = 'zipped ' + uc.FILETYPE + ' stack'
+print (file_type)
 for ending in ZipEnd:
     if ending == '.zip':
-        ZipTitle.append('zipped tiff stack')
+        ZipTitle.append(file_type)
     if ending == '.dcm':
         ZipTitle.append('dicom stack')
 ZipFileNames = ['{}{}'.format(a_, b_) for a_, b_ in zip(ZipNames,ZipEnd)]

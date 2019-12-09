@@ -12,7 +12,8 @@ If you are not going to use a variable, don't leave it blank. Write 'None' inste
 """
 #%% File Paths ################################################################
 #path to folder where all your inputs are stored
-INPUT_PATH = '/Users/biomechanicslab/Documents/MorphoSource BatchUpload' 
+INPUT_PATH = '/mnt/c/Users/M Kolmann/Documents/MorphoSource_BatchUpload' 
+
 
 #The name of the folder containing files to batch upload.
 UPLOAD_FOLDER = 'ToUpload'
@@ -45,13 +46,15 @@ OUTPUT_FILE = 'BatchWorksheet'
 #%% Fundamental setup choices #################################################
 #determine oVert now, as will set downstream choices.
 #oVert: Is this upload part of the oVert TCN grant?
-OVERT = True
+OVERT = False
 #Batch: Are there batch scans in the upload?
 BATCH = False
 #Query iDigBio: Do you want to search the iDigBio database to fill in Collection and Occurrence ID?
 QUERY_IDIGBIO = True
 #UW_Specimen: Does the specimen come from the UW Fish Collection?
-UW_SPECIMEN = True
+UW_SPECIMEN = False
+#File format of the image stacks that you are uploading. Must be all the same
+FILETYPE = 'jpeg'
 #%% File name parsing #########################################################
 #User needs to set how a file name will be parsed into a specimen
     #In oVert, the recommended file naming convention is:
@@ -86,6 +89,7 @@ SEGMENT_BODYPART = 3
 #14: Yale University
 #15: University of California-San Diego Scripps Inst of Oceanography
 #Choose either number corresponding to institute or type 'None'.
+GRANT_SCANNING_INSTITUTION = 0
 GRANT_SCANNING_INSTITUTION = 0
 GRANT_SPECIMEN_PROVIDER = 0
 #%% Media Permissions #########################################################
@@ -128,7 +132,7 @@ PUB_STATUS = 1
 
 #Add additional CT settings that aren't always in raw output files:
 #Write the name of the scanning technician in quotes
-TECHNICIAN = 'Jonathan Huie'
+TECHNICIAN = 'Thaddaeus Buser'
 
 #Write what wedge was use in scanning, if any, in quotes.
 WEDGE = None
