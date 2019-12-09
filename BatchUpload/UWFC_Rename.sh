@@ -32,11 +32,16 @@ do
     unzip -q ./zips/$line -d ./unzips/ #unzips VNHM download into Unzips folder
     if test -f ./unzips/*.txt # looks for Info file from VNHM
     then 
-        #dos2unix ./unzips/Info.txt
-        Sorce=$(awk '/^Sorce: / {print $2}' ./unzips/*.txt) #looks in Info file for Museum and CatNum
-        CatNum=$(awk '/^SorceID:/ {print $2}' ./unzips/*.txt)
+        dos2unix ./unzips/Info.txt
+        Sorce=$(awk '/^Source: / {print $2}' ./unzips/*.txt) #looks in Info file for Museum and CatNum
+        CatNum=$(awk '/^SourceID: / {print $2}' ./unzips/*.txt)
+		#Sorce=$(sed '3q;d' ./unzips/*.txt)
+		#Sorce=${Sorce#*=}
+		#CatNum=$(sed '4q;d' ./unzips/*.txt)
+		#CatNum=${CatNum#*=}
         Source=${Sorce%$'\r'} #strips carriage returns so values can be set as variables
         Number=${CatNum%$'\r'}	
+		printf -v Number "%06d" $Number #pads number with 00s
         echo $Source #prints out museum and cat num
         echo $Number
     else
@@ -67,11 +72,12 @@ do
     mv ./unzips/*.log ./ToUpload/"${name}.log" #moves the log file from unzips to ToUpload and renames it with name variable
     mv ./unzips/*.txt ./ToUpload/"${name}.txt"    
 	unzip -q ./unzips/*.zip -d ./unzips/"${name}" #unzips the Stack of images into a folder with the proper name
-    cd ./unzips/"${name}"
-    filetype="tif"
-    num=0
-    for i in * ; do mv "$i" "${name}_$(printf '%04d' $num).${filetype}"; ((num++)); done #renames each file
-    zip -q -r ./"${name}.zip" . -i *
+	cd ./unzips/"${name}"
+    filetype="tif" #change according to the file format of the image stacks being uploaded
+	echo "PLEASE DO NOT CLOSE!!! PROGRAM IS RUNNING!!!"
+    num=1
+    for i in *."${filetype}"; do mv "$i" "${name}_$(printf '%04d' $num).${filetype}"; ((num++)); done #renames each file
+	zip -q -r ./"${name}.zip" . -i *
     cd ../.. 
     mv ./unzips/"${name}"/"${name}.zip" ToUpload/
     rm -r unzips/ #removes unzip folder
