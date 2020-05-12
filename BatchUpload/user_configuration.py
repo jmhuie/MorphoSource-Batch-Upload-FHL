@@ -46,15 +46,15 @@ OUTPUT_FILE = 'BatchWorksheet'
 #%% Fundamental setup choices #################################################
 #determine oVert now, as will set downstream choices.
 #oVert: Is this upload part of the oVert TCN grant?
-OVERT = False
+OVERT = True
 #Batch: Are there batch scans in the upload?
 BATCH = False
 #Query iDigBio: Do you want to search the iDigBio database to fill in Collection and Occurrence ID?
 QUERY_IDIGBIO = True
 #UW_Specimen: Does the specimen come from the UW Fish Collection?
-UW_SPECIMEN = False
+UW_SPECIMEN = True
 #File format of the image stacks that you are uploading. Must be all the same
-FILETYPE = 'jpeg'
+FILETYPE = 'tiff'
 #%% File name parsing #########################################################
 #User needs to set how a file name will be parsed into a specimen
     #In oVert, the recommended file naming convention is:
@@ -72,24 +72,23 @@ SEGMENT_NUMBER = 2
 SEGMENT_BODYPART = 3
 #%% oVert-specific settings ###################################################
 #### TCN Institutions
-#0: University of Washington
-#1: Field Museum of Natural History
-#2: Harvard University
-#3: University of California-Berkeley
-#4: Louisiana State University & Agricultural and Mechanical College
-#5: University of Florida
-#6: University of Texas at Austin
-#7: University of Kansas Center for Research Inc
-#8: California Academy of Sciences
-#9: Cornell University
-#10: University of Michigan Ann Arbor
-#11: Texas A&M AgriLife Research
-#12: College of William & Mary Virginia Institute of Marine Science
-#13: Academy of Natural Sciences Philadelphia
-#14: Yale University
-#15: University of California-San Diego Scripps Inst of Oceanography
+#0: University of Washington (UW)
+#1: Field Museum of Natural History (FMNH)
+#2: Harvard University (MCZ)
+#3: University of California-Berkeley (MVZ)
+#4: Louisiana State University & Agricultural and Mechanical College (LSUM)
+#5: University of Florida   (UF)
+#6: University of Texas at Austin (UT)
+#7: University of Kansas Center for Research Inc (KU)
+#8: California Academy of Sciences (CAS)
+#9: Cornell University (CUMV)
+#10: University of Michigan Ann Arbor (UM)
+#11: Texas A&M AgriLife Research (TCWC)
+#12: College of William & Mary Virginia Institute of Marine Science (VIMS)
+#13: Academy of Natural Sciences Philadelphia (ANSP)
+#14: Yale University (YPM)
+#15: University of California-San Diego Scripps Inst of Oceanography (SIO)
 #Choose either number corresponding to institute or type 'None'.
-GRANT_SCANNING_INSTITUTION = 0
 GRANT_SCANNING_INSTITUTION = 0
 GRANT_SPECIMEN_PROVIDER = 0
 #%% Media Permissions #########################################################
@@ -132,7 +131,7 @@ PUB_STATUS = 1
 
 #Add additional CT settings that aren't always in raw output files:
 #Write the name of the scanning technician in quotes
-TECHNICIAN = 'Thaddaeus Buser'
+TECHNICIAN = 'Jonathan Huie'
 
 #Write what wedge was use in scanning, if any, in quotes.
 WEDGE = None

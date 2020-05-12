@@ -34,7 +34,11 @@ do
     then 
         dos2unix ./unzips/Info.txt
         Sorce=$(awk '/^Sorce: / {print $2}' ./unzips/*.txt) #looks in Info file for Museum and CatNum
-        CatNum=$(awk '/^SorceID: / {print $NF}' ./unzips/*.txt)
+        CatNum=$(awk '/^SorceID: / {print $2}' ./unzips/*.txt)
+		#Sorce=$(sed '3q;d' ./unzips/*.txt)
+		#Sorce=${Sorce#*=}
+		#CatNum=$(sed '4q;d' ./unzips/*.txt)
+		#CatNum=${CatNum#*=}
         Source=${Sorce%$'\r'} #strips carriage returns so values can be set as variables
         Number=${CatNum%$'\r'}	
 		#printf -v Number "%06d" $Number #pads number with 00s
@@ -43,14 +47,14 @@ do
     else
         echo "Info.txt not found" #tells you if no Info file
     fi
-    if [[ $Source == "UWFC" ]] #tests you're working with stuff from the correct museum
+    if [[ $Source == "ANSP" ]] #tests you're working with stuff from the correct museum
     then
-        Museum="Uwfc" #sets museum with correct cases for next script
-        Collection="A" #sets to F for fish
+        Museum="Ansp" #sets museum with correct cases for next script
+        Collection="F" #sets to F for fish
         echo $Museum #reads them out
         echo $Collection
     else
-        echo "Not UWFC" # tells you if wrong museum
+        echo "Not ANSP" # tells you if wrong museum
     fi
     name="${Museum}_${Collection}_${Number}_body" #takes all variables to set name
     if test -f ./ToUpload/$name.log
@@ -69,7 +73,7 @@ do
     mv ./unzips/*.txt ./ToUpload/"${name}.txt"    
 	unzip -q ./unzips/*.zip -d ./unzips/"${name}" #unzips the Stack of images into a folder with the proper name
 	cd ./unzips/"${name}"
-    filetype="jpg" #change according to the file format of the image stacks being uploaded
+    filetype="jpg"
 	echo "PLEASE DO NOT CLOSE!!! PROGRAM IS RUNNING!!!"
     num=1
     for i in *."${filetype}"; do mv "$i" "${name}_$(printf '%04d' $num).${filetype}"; ((num++)); done #renames each file
