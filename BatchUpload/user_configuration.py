@@ -12,7 +12,7 @@ If you are not going to use a variable, don't leave it blank. Write 'None' inste
 """
 #%% File Paths ################################################################
 #path to folder where all your inputs are stored
-INPUT_PATH = '/mnt/c/Users/M Kolmann/Documents/MorphoSource_BatchUpload' 
+INPUT_PATH = '/Users/Jonathan/Documents/MorphoSource_BatchUpload' 
 
 
 #The name of the folder containing files to batch upload.
